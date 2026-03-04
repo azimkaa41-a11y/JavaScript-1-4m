@@ -1,8 +1,8 @@
 const inputGmail = document.querySelector("#gmail_input")
 const btnGmail = document.querySelector("#gmail_button")
 const resultGmail = document.querySelector("#gmail_result")
-const parentBlok = document.querySelector('.parent_block')
-const childBlok = document.querySelector('.child_block')
+const parent = document.querySelector('.parent_block')
+const child = document.querySelector('.child_block')
 
 
 const regex = /^[a-zA-Z0-9.%+-]+@gmail\.com$/;
@@ -17,19 +17,64 @@ btnGmail.onclick = () => {
     }
 
 }
-let posX = 0;
-const parent = parentBlok.clientWidth; 
-const child = childBlok.offsetWidth; 
+
+let positionX = 0, positionY = 0;
+ 
+const toRight = parent.clientWidth - child.clientWidth;
+const toBottom = parent.clientHeight - child.clientHeight;
+
+
+
 const move  = () => {
-      posX++
-    if(posX <= 448){ 
-    childBlok.style.left = `${posX}px`
-     requestAnimationFrame(move)
+     
+    if(positionX < toRight && positionY === 0){ 
+    positionX++;
+    child.style.left = `${positionX}px`
+    }else if(positionX >= toRight && positionY < toBottom){
+        positionY++;
+        child.style.top = `${positionY}px`
+    }else if (positionY === toBottom && positionX > 0) {
+        positionX--;
+        child.style.left = `${positionX}px`
+    }else if (positionX === 0 && positionY > 0){
+        positionY--;
+        child.style.top = `${positionY}px`
     }
+    requestAnimationFrame(move)
 }
 move()
 
 
+
+const time = document.querySelector("#seconds");
+const startBtn = document.querySelector("#start");
+const stopBtn = document.querySelector("#stop");
+const resetBtn = document.querySelector("#reset");
+
+seconds = 0
+interval = null
+
+startBtn.addEventListener('click', () => {
+    if(interval === null){
+        interval = setInterval(() => {
+            seconds++;
+            time.textContent = seconds
+
+        },1000)
+
+    }
+} )
+stopBtn.addEventListener('click', ()=>{
+    clearInterval(interval)
+    interval = null
+})
+resetBtn.addEventListener('click', ()=>{
+    clearInterval(interval)
+    interval = null
+    seconds = 0 
+    time.textContent = seconds
+
+})
 
 
 // let newNumber = 0;
