@@ -29,17 +29,16 @@ const move  = () => {
      
     if(positionX < toRight && positionY === 0){ 
     positionX++;
-    child.style.left = `${positionX}px`
     }else if(positionX >= toRight && positionY < toBottom){
         positionY++;
-        child.style.top = `${positionY}px`
+  
     }else if (positionY === toBottom && positionX > 0) {
-        positionX--;
-        child.style.left = `${positionX}px`
+        positionX--;    
     }else if (positionX === 0 && positionY > 0){
-        positionY--;
-        child.style.top = `${positionY}px`
+        positionY--;    
     }
+    child.style.left = `${positionX}px`
+    child.style.top = `${positionY}px`
     requestAnimationFrame(move)
 }
 move()
